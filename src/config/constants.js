@@ -1,0 +1,12 @@
+module.exports = {
+    SEND_DARE: 'SEND_DARE',
+    DARE_ACCEPTED: 'DARE_ACCEPTED',
+    DARE_DECLINED: 'DARE_DECLINED',
+    FOLLOW_USER: 'FOLLOW_USER',
+    SEND_MESSAGE: 'SEND_MESSAGE',
+    REACTION: {
+        LIKE: 'LIKE',
+        HATE: 'HATE',
+        LOVE: 'LOVE'
+    }
+};
