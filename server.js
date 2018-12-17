@@ -18,7 +18,7 @@ const _mongoose = require('mongoose'),
 
 module.exports = {
     multer: _upload,
-    base64ToFile: base64ToFile
+    base64ToFile: require('./src/services/UtilityService').base64ToFile
 };
 
 const _config = require('./src/config/config')(process.env.NODE_ENV || 'dev'),
@@ -31,7 +31,9 @@ const isAuthenticated = _passport.authenticate('jwt', {
     session: false
 });
 
-_app.use(_bodyParser.json({ limit: '50mb' })),
+_app.use(_bodyParser.json({
+        limit: '50mb'
+    })),
     _app.use(_bodyParser.urlencoded({
         extended: false,
         limit: '50mb'
@@ -126,68 +128,12 @@ _app.post('/login', function (req, res, next) {
     })(req, res);
 });
 
+// _app.post('/test', require('./src/services/UtilityService').base64ToFile("test[]"), function (req, res) {
+//     res.send(req.body.test);
+// });
+
 (function _init() {
     const _server = _app.listen(_config.app.port, () => _debug(`server started on port: ${_config.app.port}`));
     _mongoose.connect(`mongodb://${_config.database.host}:${_config.database.port}/${_config.database.name}`);
     // require('./test/faker');
 })();
-
-function base64ToFile(propertyName, nameLength = 20) {
-    return function (request, response, next) {
-        let data = request.body[propertyName];
-        const buffer = new Buffer(data.base64, 'base64');
-        let type = "";
-        switch (data.mime) {
-            case 'image/jpeg' || 'image/jpg':
-                type = "jpg";
-                break;
-            case 'image/png':
-                type = "png";
-                break;
-            case 'image/mpeg' || 'video/mp4' || 'video/mpeg':
-                type = "mp4";
-                break;
-            default:
-                type = "";
-        }
-        let code = randomCodeGenerator({
-                alphaNumeric: true,
-                size: nameLength,
-                allowedCharacters: "aA#"
-            }),
-            pathForDb = `/public/uploads/${code}.${type}`,
-            path = `${__dirname}${pathForDb}`,
-            exists = _fs.existsSync(path);
-        while (exists) {
-            code = randomCodeGenerator({
-                    alphaNumeric: true,
-                    size: nameLength,
-                    allowedCharacters: "aA#"
-                }),
-                pathForDb = `/public/uploads/${code}.${type}`,
-                path = `${__dirname}${pathForDb}`,
-                exists = _fs.existsSync(path);
-        }
-        _fs.writeFileSync(path, buffer);
-        request.body[propertyName] = pathForDb;
-        return next();
-    }
-}
-
-function randomCodeGenerator({
-    alphaNumeric,
-    size,
-    allowedCharacters
-}) {
-    if (alphaNumeric) {
-        var container = "";
-        if (allowedCharacters.indexOf("a") > -1) container += "abcdefghijklmnopqrstuvwxyz";
-        if (allowedCharacters.indexOf("A") > -1) container += "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        if (allowedCharacters.indexOf("#") > -1) container += "0123456789";
-        if (allowedCharacters.indexOf("!") > -1) container += "~`!@#$%^&*()_+-={}[]:\";'<>?,./|\\";
-        var result = "";
-        for (var i = 0; i < size; i++) result += container[Math.floor(Math.random() * container.length)];
-        return result;
-    }
-    return Math.floor(Math.random() * Math.floor(Math.pow(10, size - 1)));
-};
