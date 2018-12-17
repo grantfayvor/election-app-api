@@ -1,1 +1,0 @@
-web: ./node_modules/.bin/node server.js
