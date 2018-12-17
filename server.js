@@ -46,7 +46,7 @@ _app.use(_bodyParser.json({
     _app.use('/api/report', isAuthenticated, _routes.reportRouter),
     require('./src/services/AuthenticationService')(_passport, _config);
 
-_app.get('/', function (req, res) {
+_app.get('/', isAuthenticated, function (req, res) {
     res.sendFile("public/index.html");
 });
 
