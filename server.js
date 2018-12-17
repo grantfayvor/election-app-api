@@ -135,6 +135,7 @@ _app.post('/login', function (req, res, next) {
 
 (function _init() {
     const _server = _app.listen(_config.app.port, () => _debug(`server started on port: ${_config.app.port}`));
-    _mongoose.connect(`mongodb://${_config.database.host}:${_config.database.port}/${_config.database.name}`);
+    // _mongoose.connect(`mongodb://${_config.database.host}:${_config.database.port}/${_config.database.name}`);
+    _mongoose.connect('mongodb://heroku_h6zr8sts:bf5d5sv3kqn53ah04t0o1qernt@ds237574.mlab.com:37574/heroku_h6zr8sts');
     // require('./test/faker');
 })();
