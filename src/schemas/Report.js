@@ -6,7 +6,7 @@ const _mongoose = require('mongoose'),
             ref: 'User',
             required: true
         },
-        uploads: String,
+        uploads: [],
         message: String
         // caption: String,
         // body: String,
