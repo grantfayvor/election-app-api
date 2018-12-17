@@ -11,7 +11,11 @@ const _mongoose = require('mongoose'),
         attachments: [{
             type: _Schema.Types.ObjectId,
             ref: 'Attachment'
-        }]
+        }],
+        createdAt: {
+            type: Date,
+            default: new Date()
+        }
     });
 
 module.exports = {
