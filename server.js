@@ -1,6 +1,6 @@
-if (!process.env.NODE_ENV || process.env.NODE_ENV !== 'prod') {
-    process.env.DEBUG = '*';
-}
+// if (!process.env.NODE_ENV || process.env.NODE_ENV !== 'prod') {
+//     process.env.DEBUG = '*';
+// }
 
 const _mongoose = require('mongoose'),
     _fs = require('fs'),
@@ -40,7 +40,7 @@ _app.use(_bodyParser.json({ limit: '50mb' })),
     _app.use(_passport.initialize()),
     _app.use(_passport.session()),
     _app.use('/api/user', isAuthenticated, _routes.userRouter),
-    _app.use('/api/report', isAuthenticated, _routes.reportRouter),
+    _app.use('/api/report', _upload.array('attachments', 6), /* isAuthenticated, */ _routes.reportRouter),
     require('./src/services/AuthenticationService')(_passport, _config);
 
 _app.get('/', function (req, res) {
@@ -54,7 +54,7 @@ _app.get('/login', function (req, res) {
 //TODO this route should be restricted to just admin
 _app.post('/register', function (req, res, next) {
 
-    const userService = new(require('./src/services/UserService'))();
+    const userService = new (require('./src/services/UserService'))();
 
     userService.save(req.body, (error, result) => {
         _debug(error);
@@ -115,8 +115,8 @@ _app.post('/login', function (req, res, next) {
                 username: user.email,
                 rank: user.rank
             }, _config.auth.secret, {
-                expiresIn: '5h'
-            });
+                    expiresIn: '5h'
+                });
             delete user.password;
             return res.json({
                 user: user,
@@ -127,49 +127,54 @@ _app.post('/login', function (req, res, next) {
 });
 
 (function _init() {
-    const _server = _app.listen(_config.app.port, () => _debug(`server started on port: ${_config.app.port}`));
-    _mongoose.connect(`mongodb://${_config.database.host}:${_config.database.port}/${_config.database.name}`);
+    _app.listen(_config.app.port, () => _debug(`server started on port: ${_config.app.port}`));
+    _mongoose.connect(`mongodb://${_config.database.host}:${_config.database.port}/${_config.database.name}`, (err, database) => {
+        if (!err) console.log(`Database connected and running on port ${_config.app.port}`)
+        else console.log(err);
+    });
     // require('./test/faker');
 })();
 
 function base64ToFile(propertyName, nameLength = 20) {
     return function (request, response, next) {
         let data = request.body[propertyName];
-        const buffer = new Buffer(data.base64, 'base64');
-        let type = "";
-        switch (data.mime) {
-            case 'image/jpeg' || 'image/jpg':
-                type = "jpg";
-                break;
-            case 'image/png':
-                type = "png";
-                break;
-            case 'image/mpeg' || 'video/mp4' || 'video/mpeg':
-                type = "mp4";
-                break;
-            default:
-                type = "";
-        }
-        let code = randomCodeGenerator({
+        if (data) {
+            const buffer = new Buffer(data.base64, 'base64');
+            let type = "";
+            switch (data.mime) {
+                case 'image/jpeg' || 'image/jpg':
+                    type = "jpg";
+                    break;
+                case 'image/png':
+                    type = "png";
+                    break;
+                case 'image/mpeg' || 'video/mp4' || 'video/mpeg':
+                    type = "mp4";
+                    break;
+                default:
+                    type = "";
+            }
+            let code = randomCodeGenerator({
                 alphaNumeric: true,
                 size: nameLength,
                 allowedCharacters: "aA#"
             }),
-            pathForDb = `/public/uploads/${code}.${type}`,
-            path = `${__dirname}${pathForDb}`,
-            exists = _fs.existsSync(path);
-        while (exists) {
-            code = randomCodeGenerator({
+                pathForDb = `/public/uploads/${code}.${type}`,
+                path = `${__dirname}${pathForDb}`,
+                exists = _fs.existsSync(path);
+            while (exists) {
+                code = randomCodeGenerator({
                     alphaNumeric: true,
                     size: nameLength,
                     allowedCharacters: "aA#"
                 }),
-                pathForDb = `/public/uploads/${code}.${type}`,
-                path = `${__dirname}${pathForDb}`,
-                exists = _fs.existsSync(path);
+                    pathForDb = `/public/uploads/${code}.${type}`,
+                    path = `${__dirname}${pathForDb}`,
+                    exists = _fs.existsSync(path);
+            }
+            _fs.writeFileSync(path, buffer);
+            request.body[propertyName] = pathForDb;
         }
-        _fs.writeFileSync(path, buffer);
-        request.body[propertyName] = pathForDb;
         return next();
     }
 }

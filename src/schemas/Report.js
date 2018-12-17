@@ -6,12 +6,14 @@ const _mongoose = require('mongoose'),
             ref: 'User',
             required: true
         },
-        caption: String,
-        body: String,
-        attachments: [{
-            type: _Schema.Types.ObjectId,
-            ref: 'Attachment'
-        }]
+        uploads: String,
+        message: String
+        // caption: String,
+        // body: String,
+        // attachments: [{
+        //     type: _Schema.Types.ObjectId,
+        //     ref: 'Attachment'
+        // }]
     });
 
 module.exports = {

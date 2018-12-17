@@ -1,5 +1,5 @@
 const _controllerHelper = require('./ControllerHelper'),
-    _service = new(require('../services/ReportService'))(),
+    _service = new (require('../services/ReportService'))(),
     debug = require('debug')('ReportController::');
 
 function ReportController() {
