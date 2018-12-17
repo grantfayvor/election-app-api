@@ -22,7 +22,7 @@ module.exports = {
     base64ToFile: require('./src/services/UtilityService').base64ToFile
 };
 
-const _config = require('./src/config/config')(process.env.NODE_ENV || 'dev'),
+const _config = require('./src/config/config')('prod'),
     _routes = require('./src/routes/index');
 
 
