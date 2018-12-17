@@ -1,5 +1,6 @@
 if (!process.env.NODE_ENV || process.env.NODE_ENV !== 'prod') {
     process.env.DEBUG = '*';
+    process.env.NODE_ENV = "prod";
 }
 
 const _mongoose = require('mongoose'),
