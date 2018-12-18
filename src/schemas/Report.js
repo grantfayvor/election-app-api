@@ -6,12 +6,12 @@ const _mongoose = require('mongoose'),
             ref: 'User',
             required: true
         },
+        uploads: [],
+        message: String,
         createdAt: {
             type: Date,
             default: new Date()
-        },
-        uploads: [],
-        message: String
+        }
         // caption: String,
         // body: String,
         // attachments: [{
