@@ -336,13 +336,13 @@
                 <!-- Sidebar user panel -->
                 <div class="user-panel">
                     <!-- <div class="pull-left image"> -->
-                        <!-- <img src="dist/img/user-160x160.jpg" class="img-circle" alt="User Image"> -->
-                        <!-- <img src="images/logo1.jpg" class="img-circle" alt="User Image"> -->
+                    <!-- <img src="dist/img/user-160x160.jpg" class="img-circle" alt="User Image"> -->
+                    <!-- <img src="images/logo1.jpg" class="img-circle" alt="User Image"> -->
                     <!-- </div> -->
                     <div class="pull-left info">
                         <!-- <p>Thanh Nguyen</p> -->
                         <!-- <a href="#"><i class="fa fa-circle text-success"></i> Online</a> -->
-                        <img src="images/logo1.jpg" class="img-circle" style="height:90px;width:90px;" alt="User Image">
+                        <img src="images/logo.jpg" class="img-circle" style="height:90px;width:90px;" alt="User Image">
                     </div>
                 </div>
 
@@ -362,25 +362,44 @@
                             </span>
                         </a>
                         <ul class="treeview-menu">
-                            <li><a href="javascript:void(0)" ui-sref="all_reports" ui-sref-active="active"><i class="fa fa-circle-o"></i> <span>View Reports</span><span
-                                        class="label label-primary pull-right">4</span></a></li>
-                            <li><a href="pages/layout/boxed.html"><i class="fa fa-circle-o"></i> Boxed</a></li>
+                            <li><a href="javascript:void(0)" ui-sref="all_reports" ui-sref-active="active"><i class="fa fa-circle-o"></i>
+                                    <span>View Reports</span><span class="label label-primary pull-right">4</span></a></li>
+                            <li><a href="javascript:void(0)" ui-sref="live_reports" ui-sref-active="active"><i class="fa fa-circle-o"></i>
+                                    Live Reports</a></li>
                         </ul>
                     </li>
                     <li class="treeview">
-                            <a href="#">
-                                <i class="fa fa-user"></i>
-                                <span>Users</span>
-                                <span class="pull-right-container">
-                                    <i class="fa fa-angle-left pull-right"></i>
-                                </span>
-                            </a>
-                            <ul class="treeview-menu">
-                                <li><a href="javascript:void(0)" ui-sref="register" ui-sref-active="active"><i class="fa fa-circle-o"></i> <span>Register User</span><span
-                                            class="label label-primary pull-right">4</span></a></li>
-                                <li><a href="pages/layout/boxed.html"><i class="fa fa-circle-o"></i> Boxed</a></li>
-                            </ul>
-                        </li>
+                        <a href="#">
+                            <i class="fa fa-bullseye"></i>
+                            <span>Department</span>
+                            <span class="pull-right-container">
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li><a href="javascript:void(0)" ui-sref="new_department" ui-sref-active="active"><i class="fa fa-circle-o"></i>
+                                    <span>Create Department</span></a></li>
+                            <li><a href="javascript:void(0)" ui-sref="view_departments"><i class="fa fa-circle-o"></i> View
+                                    Departments</a></li>
+                        </ul>
+                    </li>
+                    <li class="treeview">
+                        <a href="#">
+                            <i class="fa fa-user"></i>
+                            <span>Users</span>
+                            <span class="pull-right-container">
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li><a href="javascript:void(0)" ui-sref="register" ui-sref-active="active"><i class="fa fa-circle-o"></i>
+                                    <span>Register User</span><span class="label label-primary pull-right">4</span></a></li>
+                            <li><a href="javascript:void(0)" ui-sref="view_users"><i class="fa fa-circle-o"></i> View
+                                    Users</a></li>
+                            <li><a href="javascript:void(0)" ui-sref="create_category"><i class="fa fa-circle-o"></i>
+                                    Create Category</a></li>
+                        </ul>
+                    </li>
                 </ul>
             </section>
             <!-- /.sidebar -->
@@ -396,9 +415,7 @@
             <div class="pull-right hidden-xs">
                 <b>Version</b> 2.4.0
             </div>
-            <strong>Copyright &copy; 2014-2018 <a href="http://almsaeedstudio.com">Almsaeed Studio</a>, <a href="https://fezvrasta.github.io">Federico
-                    Zivolo</a> and <a href="https://ducthanhnguyen.github.io">Thanh Nguyen</a>.</strong> All rights
-            reserved.
+            <strong>Copyright &copy; 2014-2018  All rights reserved.
         </footer>
 
         <!-- Control Sidebar -->

@@ -7,7 +7,9 @@ const User = new _Schema({
     fullName: String,
     password: String,
     email: String,
-    mobile: String
+    mobile: String,
+    department: String,
+    supervisor: String
 });
 
 User.index({

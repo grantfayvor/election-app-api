@@ -28,6 +28,31 @@ app.config(['$httpProvider', '$interpolateProvider', '$locationProvider', '$stat
                 url: '/all_reports',
                 templateUrl: 'app/modules/report/all-reports.html',
                 controller: 'ReportController'
+            })
+            .state('live_reports', {
+                url: '/live_reports',
+                templateUrl: 'app/modules/report/live.html',
+                controller: 'ReportController'
+            })
+            .state('view_users', {
+                url: '/view_users',
+                templateUrl: 'app/modules/user/view-users.html',
+                controller: 'UserController'
+            })
+            .state('create_category', {
+                url: '/create_category',
+                templateUrl: 'app/modules/user/create-category.html',
+                controller: 'UserController'
+            })
+            .state('new_department', {
+                url: '/new_department',
+                templateUrl: 'app/modules/department/new-department.html',
+                controller: 'DepartmentController'
+            })
+            .state('view_departments', {
+                url: '/view_departments',
+                templateUrl: 'app/modules/department/view-departments.html',
+                controller: 'DepartmentController'
             });
     }
 ]);
