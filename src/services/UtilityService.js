@@ -7,11 +7,11 @@ const _fs = require('fs');
 function base64ToFile(propertyName, nameLength = 20) {
     return function (request, response, next) {
         let data = Object.assign([], request.body[propertyName]);
-        console.log(data)
+        console.log(propertyName)
         // if (data.length > 0) {
         if (propertyName.endsWith("[]")) {
             data = Object.assign([], request.body[propertyName]);
-            if(!data.length) return next();
+            if (!data.length) return next();
             propertyName = propertyName.split("[")[0];
             request.body[propertyName] = [];
             data.forEach(d => {
@@ -23,7 +23,7 @@ function base64ToFile(propertyName, nameLength = 20) {
             return next();
         } else {
             data = request.body[propertyName];
-            if(!data) return next();
+            if (!data) return next();
             dataToFile(data, pathForDb => {
                 request.body[propertyName] = pathForDb;
                 return next();
