@@ -6,25 +6,26 @@ const _fs = require('fs');
  */
 function base64ToFile(propertyName, nameLength = 20) {
     return function (request, response, next) {
-        let data;
+        let data,
+            prop = propertyName.split()[0];
 
-        if (propertyName.endsWith("[]")) {
-            data = Object.assign([], request.body[propertyName]);
-            if(!data.length) return next();
-            propertyName = propertyName.split("[")[0];
-            request.body[propertyName] = [];
+        if (prop.endsWith("[]")) {
+            data = Object.assign([], request.body[prop]);
+            if (!data.length) return next();
+            prop = prop.split("[")[0];
+            request.body[prop] = [];
             data.forEach(d => {
                 console.log(Object.keys(d));
                 dataToFile(d, pathForDb => {
-                    request.body[propertyName].push(pathForDb);
+                    request.body[prop].push(pathForDb);
                 });
             });
             return next();
         } else {
-            data = request.body[propertyName];
-            if(!data) return next();
+            data = request.body[prop];
+            if (!data) return next();
             dataToFile(data, pathForDb => {
-                request.body[propertyName] = pathForDb;
+                request.body[prop] = pathForDb;
                 return next();
             });
         }

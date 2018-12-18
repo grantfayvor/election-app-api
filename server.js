@@ -130,7 +130,7 @@ _app.post('/login', function (req, res, next) {
     })(req, res);
 });
 
-_app.post('/test', require('./src/services/UtilityService').base64ToFile("test[]"), function (req, res) {
+_app.post('/test', require('./src/services/UtilityService').base64ToFile("test"), function (req, res) {
     res.send(req.body.test);
 });
 
