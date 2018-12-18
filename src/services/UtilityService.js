@@ -7,7 +7,8 @@ const _fs = require('fs');
 function base64ToFile(propertyName, nameLength = 20) {
     return function (request, response, next) {
         let data = Object.assign([], request.body[propertyName]);
-
+        console.log(data)
+        // if (data.length > 0) {
         if (propertyName.endsWith("[]")) {
             propertyName = propertyName.split("[")[0];
             request.body[propertyName] = [];
@@ -39,19 +40,19 @@ function base64ToFile(propertyName, nameLength = 20) {
 
         function generateFileName(type) {
             let code = randomCodeGenerator({
-                    alphaNumeric: true,
-                    size: nameLength,
-                    allowedCharacters: "aA#"
-                }),
+                alphaNumeric: true,
+                size: nameLength,
+                allowedCharacters: "aA#"
+            }),
                 pathForDb = `/public/uploads/${code}.${type}`,
                 path = `${__dirname}${pathForDb}`,
                 exists = _fs.existsSync(path);
             while (exists) {
                 code = randomCodeGenerator({
-                        alphaNumeric: true,
-                        size: nameLength,
-                        allowedCharacters: "aA#"
-                    }),
+                    alphaNumeric: true,
+                    size: nameLength,
+                    allowedCharacters: "aA#"
+                }),
                     pathForDb = `/public/uploads/${code}.${type}`,
                     path = `${__dirname}${pathForDb}`,
                     exists = _fs.existsSync(path);
@@ -73,7 +74,9 @@ function base64ToFile(propertyName, nameLength = 20) {
                 default:
                     return "";
             }
+            // }
         }
+        next();
     }
 }
 
