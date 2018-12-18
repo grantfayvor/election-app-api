@@ -1,6 +1,7 @@
-// if (!process.env.NODE_ENV || process.env.NODE_ENV !== 'prod') {
-//     process.env.DEBUG = '*';
-// }
+if (!process.env.NODE_ENV || process.env.NODE_ENV !== 'prod') {
+    process.env.DEBUG = '*';
+    process.env.NODE_ENV = "prod";
+}
 
 const _mongoose = require('mongoose'),
     _fs = require('fs'),
@@ -21,7 +22,7 @@ module.exports = {
     base64ToFile: require('./src/services/UtilityService').base64ToFile
 };
 
-const _config = require('./src/config/config')(process.env.NODE_ENV || 'dev'),
+const _config = require('./src/config/config')('prod'),
     _routes = require('./src/routes/index');
 
 
@@ -45,7 +46,7 @@ _app.use(_bodyParser.json({
     _app.use('/api/report', _upload.array('attachments', 6), /* isAuthenticated, */ _routes.reportRouter),
     require('./src/services/AuthenticationService')(_passport, _config);
 
-_app.get('/', function (req, res) {
+_app.get('/', isAuthenticated, function (req, res) {
     res.sendFile("public/index.html");
 });
 
@@ -103,7 +104,8 @@ _app.post('/login', function (req, res, next) {
         if (err || !user) {
             return res.status(400).json({
                 message: 'Invalid login credentials',
-                user: user
+                user: user,
+                info
             });
         }
         req.login(user, {
@@ -128,15 +130,13 @@ _app.post('/login', function (req, res, next) {
     })(req, res);
 });
 
-// _app.post('/test', require('./src/services/UtilityService').base64ToFile("test[]"), function (req, res) {
-//     res.send(req.body.test);
-// });
+_app.post('/test', require('./src/services/UtilityService').base64ToFile("test[]"), function (req, res) {
+    res.send(req.body.test);
+});
 
 (function _init() {
-    _app.listen(_config.app.port, () => _debug(`server started on port: ${_config.app.port}`));
-    _mongoose.connect(`mongodb://${_config.database.host}:${_config.database.port}/${_config.database.name}`, (err, database) => {
-        if (!err) console.log(`Database connected and running on port ${_config.app.port}`)
-        else console.log(err);
-    });
+    const _server = _app.listen(process.env.PORT || _config.app.port, () => _debug(`server started on port: ${_config.app.port}`));
+    _mongoose.connect(`mongodb://${_config.database.host}:${_config.database.port}/${_config.database.name}`);
+    // _mongoose.connect('mongodb://heroku_h6zr8sts:bf5d5sv3kqn53ah04t0o1qernt@ds237574.mlab.com:37574/heroku_h6zr8sts');
     // require('./test/faker');
 })();

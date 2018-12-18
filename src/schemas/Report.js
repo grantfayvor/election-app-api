@@ -7,7 +7,11 @@ const _mongoose = require('mongoose'),
             required: true
         },
         uploads: [],
-        message: String
+        message: String,
+        createdAt: {
+            type: Date,
+            default: new Date()
+        }
         // caption: String,
         // body: String,
         // attachments: [{

@@ -47869,6 +47869,10 @@ app.constant('reportUrl', '/api/report')
 
             responseError: function (response) {
                 if (--loadingCount === 0) $rootScope.$broadcast('loading:finish');
+                if(response.status == 401) {
+                    window.location.href = "/login";
+                    return;
+                }
                 return $q.reject(response);
             }
         };

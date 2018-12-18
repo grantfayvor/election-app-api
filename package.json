@@ -6,8 +6,11 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "debug": "set DEBUG=* && nodemon --inspect server.js",
-    "start": "set DEBUG=* && nodemon server.js && electron .",
+    "start:nodemon": "set DEBUG=* && nodemon server.js",
     "electron": "electron ."
+  },
+  "engines": {
+      "node": "8.9.1"
   },
   "nodemonConfig": {
     "ignore": [
