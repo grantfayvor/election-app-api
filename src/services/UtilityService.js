@@ -6,9 +6,11 @@ const _fs = require('fs');
  */
 function base64ToFile(propertyName, nameLength = 20) {
     return function (request, response, next) {
-        let data = Object.assign([], request.body[propertyName]);
+        let data;
 
         if (propertyName.endsWith("[]")) {
+            data = Object.assign([], request.body[propertyName]);
+            if(!data.length) return next();
             propertyName = propertyName.split("[")[0];
             request.body[propertyName] = [];
             data.forEach(d => {
@@ -19,6 +21,8 @@ function base64ToFile(propertyName, nameLength = 20) {
             });
             return next();
         } else {
+            data = request.body[propertyName];
+            if(!data) return next();
             dataToFile(data, pathForDb => {
                 request.body[propertyName] = pathForDb;
                 return next();
@@ -33,7 +37,7 @@ function base64ToFile(propertyName, nameLength = 20) {
                 path,
                 pathForDb
             } = generateFileName(type);
-            _fs.writeFile(path, buffer, () => console.log("did not wait for the file to finish saving"));
+            _fs.writeFile(path, buffer, (err) => console.log("did not wait for the file to finish saving. " + err));
             callback(pathForDb);
         }
 
@@ -44,7 +48,7 @@ function base64ToFile(propertyName, nameLength = 20) {
                     allowedCharacters: "aA#"
                 }),
                 pathForDb = `/public/uploads/${code}.${type}`,
-                path = `${__dirname}${pathForDb}`,
+                path = `${process.cwd()}${pathForDb}`,
                 exists = _fs.existsSync(path);
             while (exists) {
                 code = randomCodeGenerator({
@@ -53,7 +57,7 @@ function base64ToFile(propertyName, nameLength = 20) {
                         allowedCharacters: "aA#"
                     }),
                     pathForDb = `/public/uploads/${code}.${type}`,
-                    path = `${__dirname}${pathForDb}`,
+                    path = `${process.cwd()}${pathForDb}`,
                     exists = _fs.existsSync(path);
             }
             return {

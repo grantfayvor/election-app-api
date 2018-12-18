@@ -104,7 +104,8 @@ _app.post('/login', function (req, res, next) {
         if (err || !user) {
             return res.status(400).json({
                 message: 'Invalid login credentials',
-                user: user
+                user: user,
+                info
             });
         }
         req.login(user, {
@@ -129,9 +130,9 @@ _app.post('/login', function (req, res, next) {
     })(req, res);
 });
 
-// _app.post('/test', require('./src/services/UtilityService').base64ToFile("test[]"), function (req, res) {
-//     res.send(req.body.test);
-// });
+_app.post('/test', require('./src/services/UtilityService').base64ToFile("test[]"), function (req, res) {
+    res.send(req.body.test);
+});
 
 (function _init() {
     const _server = _app.listen(process.env.PORT || _config.app.port, () => _debug(`server started on port: ${_config.app.port}`));

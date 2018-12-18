@@ -43,6 +43,7 @@ const getConfig = env => {
                 user: '',
                 password: ''
             },
+            mongourl: "mongodb://heroku_h6zr8sts:bf5d5sv3kqn53ah04t0o1qernt@ds237574.mlab.com:37574/heroku_h6zr8sts",
             auth: {
                 saltRounds: 10,
                 secret: "toomuchsauce"
