@@ -42,8 +42,8 @@ _app.use(_bodyParser.json({
     _app.use(_express.static('public')),
     _app.use(_passport.initialize()),
     _app.use(_passport.session()),
-    _app.use('/api/user', isAuthenticated, _routes.userRouter),
-    _app.use('/api/report', isAuthenticated, _routes.reportRouter),
+    _app.use('/api/user', /* isAuthenticated, */ _routes.userRouter),
+    _app.use('/api/report', /* isAuthenticated, */ _routes.reportRouter),
     require('./src/services/AuthenticationService')(_passport, _config);
 
 _app.get('/', isAuthenticated, function (req, res) {
@@ -130,7 +130,7 @@ _app.post('/login', function (req, res, next) {
     })(req, res);
 });
 
-_app.post('/test', require('./src/services/UtilityService').base64ToFile("test[]"), function (req, res) {
+_app.post('/test', require('./src/services/UtilityService').base64ToFile("test"), function (req, res) {
     res.send(req.body.test);
 });
 
