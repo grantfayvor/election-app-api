@@ -3,16 +3,17 @@ app.controller('ReportController', ['$rootScope', '$scope', '$state', 'ReportSer
     $scope.reports = [];
 
     $scope.getAllReports = function () {
-        ReportService.getAllReports(function(response) {
+        ReportService.getAllReports(function (response) {
             $scope.reports = response.data;
-        }, function(response) {
+            console.log(response.data)
+        }, function (response) {
             console.log("an error occurred while fetching the reports");
         });
     };
-    
+
 }]);
 
-app.service('ReportService', ['APIService', function(APIService) {
+app.service('ReportService', ['APIService', function (APIService) {
     this.getAllReports = function (successHandler, errorHandler) {
         APIService.get('/api/report', successHandler, errorHandler);
     };

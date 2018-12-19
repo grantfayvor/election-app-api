@@ -17,4 +17,10 @@ ReportController.prototype.goLive = function (request, response) {
     });
 };
 
+ReportController.prototype.populateAll = function (req, res) {
+    return this.service.findByParamAndPopulate({}, ("User"), (err, result) => {
+        return res.send(err || result);
+    })
+}
+
 module.exports = ReportController;
