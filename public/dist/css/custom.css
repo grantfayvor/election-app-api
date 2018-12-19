@@ -9,3 +9,7 @@
 .textWhite {
     color: white
 }
+
+.main-header .logo {
+    height: 120px;
+}
