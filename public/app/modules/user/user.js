@@ -74,6 +74,6 @@ app.service('UserService', ['APIService', function (APIService) {
     };
 
     this.deleteUser = function (id, successHandler, errorHandler) {
-        APIService.delete('/api/user/delete/' + id, successHandler, errorHandler);
+        APIService.delete('/api/user/' + id, successHandler, errorHandler);
     };
 }]);

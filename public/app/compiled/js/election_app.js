@@ -47836,6 +47836,31 @@ app.config(['$httpProvider', '$interpolateProvider', '$locationProvider', '$stat
                 url: '/all_reports',
                 templateUrl: 'app/modules/report/all-reports.html',
                 controller: 'ReportController'
+            })
+            .state('live_reports', {
+                url: '/live_reports',
+                templateUrl: 'app/modules/report/live.html',
+                controller: 'ReportController'
+            })
+            .state('view_users', {
+                url: '/view_users',
+                templateUrl: 'app/modules/user/view-users.html',
+                controller: 'UserController'
+            })
+            .state('create_category', {
+                url: '/create_category',
+                templateUrl: 'app/modules/user/create-category.html',
+                controller: 'UserController'
+            })
+            .state('new_department', {
+                url: '/new_department',
+                templateUrl: 'app/modules/department/new-department.html',
+                controller: 'DepartmentController'
+            })
+            .state('view_departments', {
+                url: '/view_departments',
+                templateUrl: 'app/modules/department/view-departments.html',
+                controller: 'DepartmentController'
             });
     }
 ]);;/**
@@ -48034,6 +48059,81 @@ app.service('MainService', ['APIService', 'reportUrl', function (APIService, rep
     this.getVideoFeed = function(successHandler, errorHandler) {
         // APIService.get('/api/report')
     };
+}]);;app.controller('DepartmentController', ['$rootScope', '$scope', '$state', 'DepartmentService', function ($rootScope, $scope, $state, DepartmentService) {
+
+    $scope.department = {};
+    $scope.object = {};
+    $scope.departments = [];
+    $scope.page = 'view-departments';
+    $scope.roles = [];
+    $scope.departmentChecks = [];
+    $scope.pagination = {};
+    $scope.pagination.index = 1;
+
+    $scope.registerDepartment = function () {
+        console.log("i got to register the department");
+        DepartmentService.register($scope.department, function (response) {
+            console.log("registration was successful");
+            $state.go('view_departments');
+        }, function (response) {
+            console.log("an error occurred while trying to register the department");
+        });
+    };
+
+    $scope.getAllDepartments = function () {
+        DepartmentService.getAllDepartments(function (response) {
+            $scope.departments = response.data;
+        }, function (response) {
+            console.log("error occured while trying to fetch the departments");
+        });
+    };
+
+    $scope.getDepartmentDetails = function (id) {
+        DepartmentService.getDepartmentById(id, function (response) {
+            $scope.department = response.data;
+        }, function (response) {
+            console.log("error occurred while trying to fetch the department details");
+        });
+    };
+
+    $scope.updateDepartmentDetails = function (id) {
+        DepartmentService.updateDepartmentDetails(id, $scope.department, function (response) {
+            console.log("update was successful");
+            $scope.getAllDepartments();
+            $scope.page = 'view-departments';
+        }, function (response) {
+            console.error("error occurred while trying to update the department");
+        });
+    };
+
+    $scope.deleteDepartment = function (id) {
+        DepartmentService.deleteDepartment(id, function (response) {
+            console.log("department was successfully deleted");
+            $scope.getAllDepartments();
+        }, function (response) {
+            console.error("error occurred while trying to delete the department");
+        });
+    };
+
+}]);
+
+app.service('DepartmentService', ['APIService', function (APIService) {
+
+    this.register = function (departmentDetails, successHandler, errorHandler) {
+        APIService.post('/api/department', departmentDetails, successHandler, errorHandler);
+    };
+
+    this.getAllDepartments = function (successHandler, errorHandler) {
+        APIService.get('/api/department', successHandler, errorHandler);
+    };
+
+    this.getDepartmentById = function (id, successHandler, errorHandler) {
+        APIService.get('/api/department/' + id, successHandler, errorHandler);
+    };
+
+    this.deleteDepartment = function (id, successHandler, errorHandler) {
+        APIService.delete('/api/department/' + id, successHandler, errorHandler);
+    };
 }]);;app.controller('ReportController', ['$rootScope', '$scope', '$state', 'ReportService', function ($rootScope, $scope, $state, ReportService) {
 
     $scope.reports = [];
@@ -48128,6 +48228,6 @@ app.service('UserService', ['APIService', function (APIService) {
     };
 
     this.deleteUser = function (id, successHandler, errorHandler) {
-        APIService.delete('/api/user/delete/' + id, successHandler, errorHandler);
+        APIService.delete('/api/user/' + id, successHandler, errorHandler);
     };
 }]);

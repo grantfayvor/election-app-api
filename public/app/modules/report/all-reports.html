@@ -79,7 +79,9 @@
                                         <div class="attachment">
                                             <h4>Attachments:</h4>
                                             <p class="filename">
-                                                <img data-ng-src="{{report.uploads}}" style="height:100px;width:30%" alt="user image" class="online">
+                                                <p class="filename">
+                                                    <img data-ng-repeat="upload in report.uploads" data-ng-src="{{upload}}" style="height:100px;width:30%" alt="user image" class="online">
+                                                </p>
                                                 <!-- <img src="dist/img/user4-128x128.jpg" alt="user image" class="online"> -->
                                                 <!-- <img src="dist/img/user-160x160.jpg" alt="user image" class="offline"> -->
                                             </p>

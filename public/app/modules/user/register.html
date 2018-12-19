@@ -47,15 +47,37 @@
                                     <span class="glyphicon glyphicon-phone form-control-feedback"></span>
                                 </div>
                                 <div class="form-group has-feedback">
-                                    <input type="password" data-ng-model="user.password" class="form-control" placeholder="Password">
+                                    <select name="department" class="form-control" data-ng-model="user.department" id="department">
+                                        <option value="">Select a department</option>
+                                        <option value="DTS">DTS</option>
+                                        <option value="D.LOGISTICS">D.LOGISTICS</option>
+                                        <option value="D.FA">D.FA</option>
+                                        <option value="D.INT">D.INT</option>
+                                        <option value="D.OPS">D.OPS</option>
+                                    </select>
+                                    <span class="glyphicon glyphicon-log-in form-control-feedback"></span>
+                                </div>
+                                <div class="form-group has-feedback">
+                                    <select name="supervisor" class="form-control" data-ng-model="user.supervisor" id="supervisor">
+                                        <option value="">Select a Field Supervisor</option>
+                                        <option value="Onyekachi Akpan">Onyekachi Akpan</option>
+                                        <option value="Idowu Ibrahim">Idowu Ibrahim</option>
+                                        <option value="Chioma Oshodi">Chioma Oshodi</option>
+                                    </select>
+                                    <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                                </div>
+                                <div class="form-group has-feedback">
+                                    <input type="password" data-ng-model="user.password" class="form-control"
+                                        placeholder="Password">
                                     <span class="glyphicon glyphicon-lock form-control-feedback"></span>
                                 </div>
                                 <div class="form-group has-feedback">
-                                    <input type="password" data-ng-model="user.cofirmPassword" class="form-control" placeholder="Retype password">
-                                    <span class="glyphicon glyphicon-log-in form-control-feedback"></span>
+                                    <input type="password" data-ng-model="user.cofirmPassword" class="form-control"
+                                        placeholder="Retype password">
+                                    <span class="glyphicon glyphicon-lock form-control-feedback"></span>
                                 </div>
                                 <div class="row">
-                                    
+
                                     <div class="col-xs-7 pull-right">
                                         <button type="submit" class="btn btn-primary btn-raised btn-block btn-flat">Register</button>
                                     </div>

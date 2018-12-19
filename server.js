@@ -44,6 +44,7 @@ _app.use(_bodyParser.json({
     _app.use(_passport.session()),
     _app.use('/api/user', isAuthenticated, _routes.userRouter),
     _app.use('/api/report', isAuthenticated, _routes.reportRouter),
+    _app.use('/api/department', isAuthenticated, _routes.departmentRouter),
     require('./src/services/AuthenticationService')(_passport, _config);
 
 _app.get('/', isAuthenticated, function (req, res) {
@@ -57,7 +58,7 @@ _app.get('/login', function (req, res) {
 //TODO this route should be restricted to just admin
 _app.post('/register', function (req, res, next) {
 
-    const userService = new (require('./src/services/UserService'))();
+    const userService = new(require('./src/services/UserService'))();
 
     userService.save(req.body, (error, result) => {
         _debug(error);
@@ -119,8 +120,8 @@ _app.post('/login', function (req, res, next) {
                 username: user.email,
                 rank: user.rank
             }, _config.auth.secret, {
-                    expiresIn: '5h'
-                });
+                expiresIn: '5h'
+            });
             delete user.password;
             return res.json({
                 user: user,
@@ -136,7 +137,7 @@ _app.post('/test', require('./src/services/UtilityService').base64ToFile("test")
 
 (function _init() {
     const _server = _app.listen(process.env.PORT || _config.app.port, () => _debug(`server started on port: ${_config.app.port}`));
-    _mongoose.connect(`mongodb://${_config.database.host}:${_config.database.port}/${_config.database.name}`);
-    // _mongoose.connect('mongodb://heroku_h6zr8sts:bf5d5sv3kqn53ah04t0o1qernt@ds237574.mlab.com:37574/heroku_h6zr8sts');
+    // _mongoose.connect(`mongodb://${_config.database.host}:${_config.database.port}/${_config.database.name}`);
+    _mongoose.connect('mongodb://heroku_h6zr8sts:bf5d5sv3kqn53ah04t0o1qernt@ds237574.mlab.com:37574/heroku_h6zr8sts');
     // require('./test/faker');
 })();

@@ -12,4 +12,12 @@ _router.put('/', _reportController.update.bind(_reportController));
 _router.delete('/:id', _reportController.delete.bind(_reportController));
 _router.get('/live/go', _reportController.goLive.bind(_reportController));
 
+function getUser(req, res, next) {
+    if(req.user) {
+        req.body.reporter = req.user._id;
+        return next();
+    }
+    return next();
+}
+
 module.exports = _router;

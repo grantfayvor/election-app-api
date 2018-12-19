@@ -1,4 +1,5 @@
 module.exports = {
     userRouter: require('./user'),
-    reportRouter: require('./report')
+    reportRouter: require('./report'),
+    departmentRouter: require('./department')
 };
