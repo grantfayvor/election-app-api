@@ -18,7 +18,7 @@ ReportController.prototype.goLive = function (request, response) {
 };
 
 ReportController.prototype.populateAll = function (req, res) {
-    return this.service.findByParamAndPopulate({}, ("User"), (err, result) => {
+    return this.service.findByParamAndPopulate({}, ("reporter"), (err, result) => {
         return res.send(err || result);
     })
 }

@@ -5,7 +5,6 @@ app.controller('ReportController', ['$rootScope', '$scope', '$state', 'ReportSer
     $scope.getAllReports = function () {
         ReportService.getAllReports(function (response) {
             $scope.reports = response.data;
-            console.log(response.data)
         }, function (response) {
             console.log("an error occurred while fetching the reports");
         });
@@ -15,6 +14,6 @@ app.controller('ReportController', ['$rootScope', '$scope', '$state', 'ReportSer
 
 app.service('ReportService', ['APIService', function (APIService) {
     this.getAllReports = function (successHandler, errorHandler) {
-        APIService.get('/api/report', successHandler, errorHandler);
+        APIService.get('/api/report/populateAll', successHandler, errorHandler);
     };
 }]);

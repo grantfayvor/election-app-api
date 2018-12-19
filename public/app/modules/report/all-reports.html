@@ -1,5 +1,5 @@
 <!-- Content Header (Page header) -->
-<section class="content-header" data-ng-init="getAllReports()">
+<!-- <section class="content-header" data-ng-init="getAllReports()">
     <h1>
         Home
         <small>election monitor</small>
@@ -8,7 +8,7 @@
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
         <li class="active">Dashboard</li>
     </ol>
-</section>
+</section> -->
 
 <section class="content">
     <!-- Main row -->
@@ -67,17 +67,20 @@
                                             </div>
                                         </div>
                                     </td>
-                                    <td class="mailbox-name"><a href="read-mail.html"><span data-ng-bind="report.user.fullName"></span></a></td>
+                                    <td class="mailbox-name"><a href="read-mail.html">
+                                            <p class="message" style="margin-top: 26px;"><span data-ng-bind="report.reporter.fullName"></span>
+                                            </p>
+                                        </a></td>
                                     <td class="mailbox-subject">
-                                        <p class="message">
+                                        <p class="message" style="margin-top: 26px;">
                                             <!-- <a href="#" class="name">
-                                                <small class="text-muted pull-right"><i class="fa fa-clock-o"></i> 2:15</small>
-                                                <span data-ng-bind="report.user.fullName"></span>
-                                            </a> -->
+                                                    <small class="text-muted pull-right"><i class="fa fa-clock-o"></i> 2:15</small>
+                                                    <span data-ng-bind="report.user.fullName"></span>
+                                                </a> -->
                                             <span data-ng-bind="report.message"></span>
                                         </p>
                                         <div class="attachment">
-                                            <h4>Attachments:</h4>
+                                            <h4 data-ng-if="report.uploads && report.uploads.length">Attachments:</h4>
                                             <p class="filename">
                                                 <p class="filename">
                                                     <img data-ng-repeat="upload in report.uploads" data-ng-src="{{upload}}" style="height:100px;width:30%" alt="user image" class="online">
@@ -87,42 +90,18 @@
                                             </p>
 
                                             <!-- <div class="pull-right">
-                                                <button type="button" class="btn btn-primary btn-sm btn-flat">Open</button>
-                                            </div> -->
+                                                    <button type="button" class="btn btn-primary btn-sm btn-flat">Open</button>
+                                                </div> -->
                                         </div>
                                     </td>
                                     <!-- <td class="mailbox-attachment"></td>
-                                    <td class="mailbox-date">5 mins ago</td> -->
+                                        <td class="mailbox-date">5 mins ago</td> -->
                                 </tr>
                             </tbody>
                         </table>
                         <!-- /.table -->
                     </div>
                     <!-- /.mail-box-messages -->
-                </div>
-                <!-- /.box-body -->
-                <div class="box-footer no-padding">
-                    <div class="mailbox-controls">
-                        <!-- Check all button -->
-                        <button type="button" class="btn btn-default btn-sm checkbox-toggle"><i class="fa fa-square-o"></i>
-                        </button>
-                        <div class="btn-group">
-                            <button type="button" class="btn btn-default btn-sm"><i class="fa fa-trash-o"></i></button>
-                            <button type="button" class="btn btn-default btn-sm"><i class="fa fa-reply"></i></button>
-                            <button type="button" class="btn btn-default btn-sm"><i class="fa fa-share"></i></button>
-                        </div>
-                        <!-- /.btn-group -->
-                        <button type="button" class="btn btn-default btn-sm"><i class="fa fa-refresh"></i></button>
-                        <div class="pull-right">
-                            1-50/200
-                            <div class="btn-group">
-                                <button type="button" class="btn btn-default btn-sm"><i class="fa fa-chevron-left"></i></button>
-                                <button type="button" class="btn btn-default btn-sm"><i class="fa fa-chevron-right"></i></button>
-                            </div>
-                            <!-- /.btn-group -->
-                        </div>
-                        <!-- /.pull-right -->
-                    </div>
                 </div>
             </div>
             <!-- /.box (chat box) -->

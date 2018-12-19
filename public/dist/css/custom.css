@@ -1,0 +1,11 @@
+.wrapper {
+    background-color: #222d32!important;
+}
+
+.fixed .content-wrapper, .fixed .right-side {
+    padding-top: 0;
+}
+
+.textWhite {
+    color: white
+}

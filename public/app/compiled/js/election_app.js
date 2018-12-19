@@ -48139,18 +48139,18 @@ app.service('DepartmentService', ['APIService', function (APIService) {
     $scope.reports = [];
 
     $scope.getAllReports = function () {
-        ReportService.getAllReports(function(response) {
+        ReportService.getAllReports(function (response) {
             $scope.reports = response.data;
-        }, function(response) {
+        }, function (response) {
             console.log("an error occurred while fetching the reports");
         });
     };
-    
+
 }]);
 
-app.service('ReportService', ['APIService', function(APIService) {
+app.service('ReportService', ['APIService', function (APIService) {
     this.getAllReports = function (successHandler, errorHandler) {
-        APIService.get('/api/report', successHandler, errorHandler);
+        APIService.get('/api/report/populateAll', successHandler, errorHandler);
     };
 }]);;app.controller('UserController', ['$rootScope', '$scope', '$state', 'UserService', function ($rootScope, $scope, $state, UserService) {
 
