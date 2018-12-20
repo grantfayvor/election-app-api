@@ -67,10 +67,12 @@
                                             </div>
                                         </div>
                                     </td>
-                                    <td class="mailbox-name"><a href="read-mail.html">
+                                    <td class="mailbox-name">
+                                        <a href="read-mail.html">
                                             <p class="message" style="margin-top: 26px;"><span data-ng-bind="report.reporter.fullName"></span>
                                             </p>
-                                        </a></td>
+                                        </a>
+                                    </td>
                                     <td class="mailbox-subject">
                                         <p class="message" style="margin-top: 26px;">
                                             <!-- <a href="#" class="name">
@@ -94,6 +96,11 @@
                                                 </div> -->
                                         </div>
                                     </td>
+                                    <td data-ng-click="fetchReportDetails(report._id)" class="mailbox-name">
+                                        <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modal-default">
+                                            <i class="fa fa-pencil"></i>
+                                            <div class="ripple-container"></div></button>
+                                    </td>
                                     <!-- <td class="mailbox-attachment"></td>
                                         <td class="mailbox-date">5 mins ago</td> -->
                                 </tr>
@@ -108,3 +115,37 @@
         </div>
     </div>
 </section>
+
+<div class="modal fade in" id="modal-default">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span></button>
+                <h4 class="modal-title">Respond to report</h4>
+            </div>
+            <div class="modal-body">
+                <p data-ng-if="reportData.message"><span data-ng-bind="reportData.message"></span></p>
+                <p data-ng-if="reportData.uploads && reportData.uploads.length">
+                    <div class="attachment">
+                        <p class="filename">
+                            <p class="filename">
+                                <img data-ng-repeat="upload in reportData.uploads" data-ng-src="{{upload}}" style="height:100px;width:30%" alt="user image"
+                                    class="online">
+                            </p>
+                        </p>
+                    </div>
+                </p>
+                <textarea data-ng-model="response" rows="5" class="form-control"></textarea>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close<div class="ripple-container">
+                        <div class="ripple ripple-on ripple-out" style="left: 30.5px; top: 31px; background-color: rgba(0, 0, 0, 0.87); transform: scale(6.51173);"></div>
+                    </div></button>
+                <button type="button" data-ng-click="sendResponse()" class="btn btn-primary">Send</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
