@@ -43,8 +43,9 @@ _app.use(_bodyParser.json({
     _app.use(_passport.initialize()),
     _app.use(_passport.session()),
     _app.use('/api/user', isAuthenticated, _routes.userRouter),
-    _app.use('/api/report', isAuthenticated, _routes.reportRouter),
+    _app.use('/api/report', _routes.reportRouter),
     _app.use('/api/department', isAuthenticated, _routes.departmentRouter),
+    _app.use('/api/response', isAuthenticated, _routes.responseRouter),
     require('./src/services/AuthenticationService')(_passport, _config);
 
 _app.get('/', isAuthenticated, function (req, res) {
@@ -137,7 +138,7 @@ _app.post('/test', require('./src/services/UtilityService').base64ToFile("test")
 
 (function _init() {
     const _server = _app.listen(process.env.PORT || _config.app.port, () => _debug(`server started on port: ${_config.app.port}`));
-    // _mongoose.connect(`mongodb://${_config.database.host}:${_config.database.port}/${_config.database.name}`);
-    _mongoose.connect('mongodb://heroku_h6zr8sts:bf5d5sv3kqn53ah04t0o1qernt@ds237574.mlab.com:37574/heroku_h6zr8sts');
+    _mongoose.connect(`mongodb://${_config.database.host}:${_config.database.port}/${_config.database.name}`);
+    // _mongoose.connect('mongodb://heroku_h6zr8sts:bf5d5sv3kqn53ah04t0o1qernt@ds237574.mlab.com:37574/heroku_h6zr8sts');
     // require('./test/faker');
 })();

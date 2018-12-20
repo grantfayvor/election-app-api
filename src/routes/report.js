@@ -5,6 +5,7 @@ const _router = require('express').Router(),
 
 _router.get('/', _reportController.findAll.bind(_reportController));
 _router.get('/populateAll', _reportController.populateAll.bind(_reportController));
+_router.get('/fetchReport/:id', _reportController.fetchReport.bind(_reportController));
 _router.post('/photo', _base64ToFile("uploads[]"), _reportController.save.bind(_reportController));
 _router.post('/message', _reportController.save.bind(_reportController));
 _router.get('/:id', _reportController.findById.bind(_reportController));

@@ -23,4 +23,10 @@ ReportController.prototype.populateAll = function (req, res) {
     })
 }
 
+ReportController.prototype.fetchReport = function (req, res) {
+    return this.service.findById(req.params.id, (err, result) => {
+        return res.send(err || result);
+    })
+}
+
 module.exports = ReportController;
