@@ -45,7 +45,7 @@ _app.use(_bodyParser.json({
     _app.use('/api/user', isAuthenticated, _routes.userRouter),
     _app.use('/api/report', _routes.reportRouter),
     _app.use('/api/department', isAuthenticated, _routes.departmentRouter),
-    _app.use('/api/response', isAuthenticated, _routes.responseRouter),
+    _app.use('/api/response', _routes.responseRouter),
     require('./src/services/AuthenticationService')(_passport, _config);
 
 _app.get('/', isAuthenticated, function (req, res) {

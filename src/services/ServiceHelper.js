@@ -15,11 +15,7 @@ ServiceHelper.prototype.findAll = function (callback) {
     checkKnownParameterTypes({
         callback
     });
-    return this.repository.findByParam(null, /* {
-        sort: {
-            _id: 1
-        }
-    } */ null, callback);
+    return this.repository.findByParam(null, null, callback);
 };
 
 ServiceHelper.prototype.findById = function (id, callback) {
