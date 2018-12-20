@@ -8,4 +8,10 @@ function ResponseController() {
 
 ResponseController.prototype = Object.create(_controllerHelper.prototype);
 
+ResponseController.prototype.getResponse = function (req, res) {
+    return this.service.findByParamAndPopulate({ reporter: req.params.id }, ("report"), (err, result) => {
+        return res.send(err || result);
+    })
+}
+
 module.exports = ResponseController;
